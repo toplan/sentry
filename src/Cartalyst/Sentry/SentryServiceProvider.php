@@ -27,7 +27,7 @@ use Cartalyst\Sentry\Hashing\WhirlpoolHasher;
 use Cartalyst\Sentry\Sentry;
 use Cartalyst\Sentry\Sessions\IlluminateSession;
 use Cartalyst\Sentry\Throttling\Eloquent\Provider as ThrottleProvider;
-use Cartalyst\Sentry\Users\Eloquent\Provider as UserProvider;
+use Cartalyst\Sentry\Users\Eloquent\ModifyProvider as UserProvider;
 use Illuminate\Support\ServiceProvider;
 
 class SentryServiceProvider extends ServiceProvider {
@@ -115,6 +115,17 @@ class SentryServiceProvider extends ServiceProvider {
 				forward_static_call_array(
 					array($model, 'setLoginAttributeName'),
 					array($loginAttribute)
+				);
+			}
+
+			// modify 2015年03月21日17:30:48
+			if (method_exists($model, 'setLoginAttributesName'))
+			{
+				$loginAttributes = $app['config']['cartalyst/sentry::users.login_attributes'];
+
+				forward_static_call_array(
+					array($model, 'setLoginAttributesName'),
+					array($loginAttributes)
 				);
 			}
 
@@ -217,7 +228,7 @@ class SentryServiceProvider extends ServiceProvider {
 					array($suspensionTime)
 				);
 			}
-			
+
 			// Define the User model to use for relationships.
 			if (method_exists($model, 'setUserModel'))
 			{

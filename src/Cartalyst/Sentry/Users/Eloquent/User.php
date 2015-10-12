@@ -507,7 +507,7 @@ class User extends Model implements UserInterface {
     {
 		$this->userGroups = null;
     }
-    
+
 	/**
 	 * Adds the user to the given group.
 	 *
@@ -630,7 +630,12 @@ class User extends Model implements UserInterface {
 	{
 		$mergedPermissions = $this->getMergedPermissions();
 
-		foreach ((array) $permissions as $permission)
+		if ( ! is_array($permissions))
+		{
+			$permissions = (array) $permissions;
+		}
+
+		foreach ($permissions as $permission)
 		{
 			// We will set a flag now for whether this permission was
 			// matched at all.

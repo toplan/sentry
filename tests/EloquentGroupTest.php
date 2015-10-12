@@ -297,16 +297,4 @@ class EloquentGroupTest extends PHPUnit_Framework_TestCase {
 		$group->delete();
 	}
 
-	public function testGroupHasAccess()
-	{
-		$group = new \Cartalyst\Sentry\Groups\Eloquent\Group;
-		$group->name = 'foo';
-		$group->permissions = array(
-			'user.update' => 1
-		);
-
-		$this->assertTrue($group->hasAccess('user.update'));
-		$this->assertFalse($group->hasAccess('user.delete'));
-	}
-
 }
